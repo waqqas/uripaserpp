@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.10)
 
 project(uriparserpp VERSION "0.1.0" DESCRIPTION "C++ wrapper on uriparser library")
 
+list(PREPEND CMAKE_PREFIX_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules)
+
 include(GNUInstallDirs)
 
 set(CMAKE_C_STANDARD 11)
