@@ -14,7 +14,7 @@ ExternalProject_Add(catch2
 file(GLOB SOURCES *.cpp *.h)
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-include_directories(${CMAKE_SOURC_DIR}/include)
+include_directories(${CMAKE_SOURCE_DIR}/include)
 include_directories(${CMAKE_INSTALL_PREFIX}/include)
 
 add_dependencies(${PROJECT_NAME} catch2)
