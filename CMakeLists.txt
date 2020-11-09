@@ -32,6 +32,8 @@ endif()
 
 add_library(${PROJECT_NAME} INTERFACE)
 
+add_dependencies(${PROJECT_NAME} URIParser)
+
 target_include_directories(
   ${PROJECT_NAME}
   INTERFACE $<BUILD_INTERFACE:${${PROJECT_NAME}_SOURCE_DIR}/include>
