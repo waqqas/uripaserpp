@@ -65,7 +65,7 @@ DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake)
 
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME} DESTINATION include)
 
-option(URIPARSERPP_BUILD_TESTS "Enable building tests" OFF)
+option(URIPARSERPP_BUILD_TESTS "Enable building tests" ON)
 if(URIPARSERPP_BUILD_TESTS)
     add_subdirectory(tests)
 endif()
