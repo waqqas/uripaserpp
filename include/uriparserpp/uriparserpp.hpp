@@ -52,17 +52,15 @@ class uri
 
    std::string path()
    {
-      std::string            path = "";
-      std::list<std::string> pathSegments;
+      std::string path = "";
 
       for (auto segment = _url.pathHead; segment != NULL; segment = segment->next)
       {
          if (segment->text.first != NULL && segment->text.afterLast != NULL)
          {
-            pathSegments.push_back(std::string(segment->text.first, segment->text.afterLast));
+            path += "/" + std::string(segment->text.first, segment->text.afterLast);
          }
       }
-      std::for_each(pathSegments.begin(), pathSegments.end(), [&path](const auto &segment) { path += "/" + segment; });
 
       return path;
    }
