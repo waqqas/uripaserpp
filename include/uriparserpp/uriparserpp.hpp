@@ -1,12 +1,43 @@
 #ifndef URI_PARSER_PP_H
 #define URI_PARSER_PP_H
 
+#include <algorithm>
+#include <iostream>
 #include <list>
+#include <memory>
 #include <stdexcept>
 #include <string>
+#include <string_view>
 #include <uriparser/Uri.h>
 
 namespace uriparserpp {
+
+class path
+{
+ private:
+   std::list<std::string_view> _segments;
+
+ public:
+   friend std::ostream &operator<<(std::ostream &os, const path &);
+
+   void push_back(std::string_view const &segment)
+   {
+      _segments.push_back(segment);
+   }
+   void push_front(std::string_view const &segment)
+   {
+      _segments.push_front(segment);
+   }
+};
+
+std::ostream &operator<<(std::ostream &os, const path &path)
+{
+   std::for_each(path._segments.cbegin(), path._segments.cend(),
+                 [&os](const std::string_view &segment) { os << '/' << segment; });
+
+   return os;
+}
+
 class uri
 {
  private:
@@ -50,19 +81,19 @@ class uri
       return "";
    }
 
-   std::string path()
+   path path()
    {
-      std::string path = "";
+      uriparserpp::path p;
 
       for (auto segment = _url.pathHead; segment != NULL; segment = segment->next)
       {
          if (segment->text.first != NULL && segment->text.afterLast != NULL)
          {
-            path += "/" + std::string(segment->text.first, segment->text.afterLast);
+            p.push_back(std::string_view(segment->text.first, (segment->text.afterLast - segment->text.first)));
          }
       }
 
-      return path;
+      return p;
    }
 
    ~uri()

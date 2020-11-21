@@ -1,6 +1,7 @@
 #include "uriparserpp/uriparserpp.hpp"
 
 #include <catch2/catch.hpp>
+#include <sstream>
 
 using namespace uriparserpp;
 
@@ -11,9 +12,29 @@ TEST_CASE("Parsing")
    REQUIRE(uri.scheme() == "http");
    REQUIRE(uri.host() == "www.test.com");
    REQUIRE(uri.port() == "81");
-   REQUIRE(uri.path() == "/static/index.html");
+   std::stringstream ss;
+   ss << uri.path();
+   REQUIRE(ss.str() == "/static/index.html");
+}
 
-   // uri.userInfo()   // user:pass
-   //    uri.query()   // q=books
-   //    uri.anchor()  // fragment
+TEST_CASE("Prepend in path")
+{
+   uri uri("http://www.test.com:81/static/index.html");
+
+   auto path = uri.path();
+   path.push_front("abc");
+   std::stringstream ss;
+   ss << path;
+   REQUIRE(ss.str() == "/abc/static/index.html");
+}
+
+TEST_CASE("Append in path")
+{
+   uri uri("http://www.test.com:81/static/index.html");
+
+   auto path = uri.path();
+   path.push_back("abc");
+   std::stringstream ss;
+   ss << path;
+   REQUIRE(ss.str() == "/static/index.html/abc");
 }
